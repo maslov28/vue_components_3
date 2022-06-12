@@ -9,15 +9,15 @@
     :title="title" 
     :disabled="disabled" 
     :loading="loading"
-    @button-click="buttonClick"
+    @click="buttonClick"
+    @set-disabled="setDisabled"
   ></app-button>
 
   <app-input
-    :model-value="modelValue"
+    v-model="inputText"
     :app-placeholder="appPlaceholder"
-    @update="update"
   ></app-input>
-
+  
 </template>
 
 <script>
@@ -31,16 +31,23 @@ export default {
     const title = ref('App Button')
     const disabled = ref(false)
     const loading = ref(false)
-    const modelValue = ref('')
+    const inputText = ref('')
     const appPlaceholder = ref('This is placeholder')
 
     function buttonClick() {
-      console.log('clicked')
+      if (inputText.value !== '') {
+        loading.value = true
+        disabled.value = true
+        setTimeout(() => {
+          loading.value = false
+          disabled.value = false
+          inputText.value = ''
+        }, 2000)
+      }
     }
 
-    function update(data) {
-      modelValue.value = data
-      console.log(modelValue.value)
+    function setDisabled() {
+      disabled.value = true
     }
 
     return {
@@ -48,9 +55,9 @@ export default {
       disabled, 
       loading, 
       buttonClick,
-      modelValue,
-      appPlaceholder,
-      update
+      setDisabled,
+      inputText,
+      appPlaceholder
     }
   },
 
