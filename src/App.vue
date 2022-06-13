@@ -10,7 +10,6 @@
     :disabled="disabled" 
     :loading="loading"
     @click="buttonClick"
-    @set-disabled="setDisabled"
   ></app-button>
 
   <app-input
